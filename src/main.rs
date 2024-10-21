@@ -1,3 +1,10 @@
+/// This program makes the user guess a random number.
+///  
+/// As a first Rust project, the goal here is to exploit as many 
+/// different concepts as possible (borrowing, loops, enum, 
+/// pattern matching, Result, etc.) even if it means sometimes 
+/// making the code a little more convoluted.
+
 use std::io; // User input
 use rand::Rng; // Random Number Generator
 
@@ -10,6 +17,7 @@ enum GuessResult {
     Equal,
 }
 
+/// Checks if the choosen level is valid and returns a Result type
 fn lvl_checker(lvl:&u8) -> Result<u8, String> {
     if *lvl >= 1 && *lvl <= 4 {
         Ok(*lvl)
@@ -49,7 +57,7 @@ fn main() {
     let mut num_max: i32 = 500;
 
     // Level choice loop
-    loop {
+    'lvl_loop : loop {
         lvl_input.clear(); // User input is cleared
         println!("Please choose a level (1-4) :");
 
@@ -59,15 +67,19 @@ fn main() {
             .expect("Failed to read");
 
         // Input conversion to u8
-        let lvl: u8 = lvl_input
-            .trim()
-            .parse()
-            .expect("Type a valid number");
+        let lvl: u8;
+        match lvl_input.trim().parse::<u8>() {
+            Ok(val) => lvl = val,
+            Err(_) => {
+                println!("Not a valid number");
+                continue 'lvl_loop;
+            }
+        }
 
         // 
         match lvl_checker(&lvl) {
             Ok(choice) => {
-                println!("Niveau {}", choice);
+                println!("Level {}", choice);
                 match lvl {
                     1 => num_max = 500,
                     2 => num_max = 1000,
@@ -75,9 +87,9 @@ fn main() {
                     4 => num_max = 10000,
                     _ => num_max = 500,
                 }
-                break;
+                break 'lvl_loop;
             }
-            Err(_) => continue,
+            Err(_) => continue 'lvl_loop,
         } 
     }
 
