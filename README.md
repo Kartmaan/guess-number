@@ -1,6 +1,6 @@
 # guess-number-rust
 A small program made in Rust that **makes the player guess a random number**. 
-The program has 4 levels, depending on the width of the random value ranges.
+The program has 4 levels, depending on of the random value ranges width .
 - 1 : from 1 to 500
 - 2 : from 1 to 1000
 - 3 : from 1 to 5000
