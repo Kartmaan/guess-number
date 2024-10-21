@@ -81,16 +81,11 @@ fn main() {
         // is supposed to return a Result type. The choice of 
         // level impacts the value of the upper bound of the 
         // random number generation 'num_max'
+        let upper_bounds : [i32; 4] = [500, 1000, 5000, 10000];
         match lvl_checker(&lvl) {
             Ok(choice) => {
                 println!("Level {}", choice);
-                match lvl {
-                    1 => num_max = 500,
-                    2 => num_max = 1000,
-                    3 => num_max = 5000,
-                    4 => num_max = 10000,
-                    _ => num_max = 500,
-                }
+                num_max = upper_bounds[(choice - 1) as usize];
                 break 'lvl_loop; // Loop exit
             }
             Err(_) => continue 'lvl_loop, // Loop resume
