@@ -111,7 +111,7 @@ fn main() {
     let mut input: String = String::new();
 
     // LOOP START
-    while in_guess {
+    'in_guess_loop : while in_guess {
         input.clear(); // User input is cleared
         println!("Try to guess the number between 0 et {} :", num_max);
 
@@ -125,10 +125,14 @@ fn main() {
         // Convert String in to i32
         // trim() : sdelete all spaces
         // parse() : conversion according to the type of assigned variable
-        // expect() : error message
-        let num_guessed: i32 = input.trim()
-            .parse()
-            .expect("Please type a valid number");
+        let num_guessed: i32;
+        match input.trim().parse::<i32>() {
+            Ok(val) => num_guessed = val,
+            Err(_) => {
+                println!("Please type a valid number");
+                continue 'in_guess_loop;
+            }
+        }
         
         // Submits the number entered by the player and the random
         // number generated to the 'equality_match' function for 
