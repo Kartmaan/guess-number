@@ -54,6 +54,7 @@ fn main() {
     let mut lvl_input: String = String::new();
 
     // Upper bound of the rng range
+    #[allow(unused_assignments)]
     let mut num_max: i32 = 500;
 
     // Level choice loop
@@ -76,7 +77,10 @@ fn main() {
             }
         }
 
-        // 
+        // Checks the return of the 'lvl_checker' function that 
+        // is supposed to return a Result type. The choice of 
+        // level impacts the value of the upper bound of the 
+        // random number generation 'num_max'
         match lvl_checker(&lvl) {
             Ok(choice) => {
                 println!("Level {}", choice);
@@ -87,9 +91,9 @@ fn main() {
                     4 => num_max = 10000,
                     _ => num_max = 500,
                 }
-                break 'lvl_loop;
+                break 'lvl_loop; // Loop exit
             }
-            Err(_) => continue 'lvl_loop,
+            Err(_) => continue 'lvl_loop, // Loop resume
         } 
     }
 
